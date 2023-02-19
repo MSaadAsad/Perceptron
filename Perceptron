@@ -1,0 +1,26 @@
+from math import exp
+
+class Perceptron():
+    
+    def __init__(self, w1, w2, bias, epoch, rate):
+        self.w1 = w1
+        self.w2 = w2
+        self.bias = bias
+        self.epoch = epoch
+        self.rate = rate
+        
+    
+    def train(self, x1, x2, truth):
+        for i in range(self.epoch):
+            for j in range(len(x1)):
+                pred = 1/(1 + exp(-(self.w1*x1[j] + self.w2*x2[j] + self.bias)))
+                error = self.rate * (truth[j] - pred)
+                self.w1 += error*x1[j]
+                self.w2 += error*x2[j]
+                self.bias += error
+    
+    def predict(self, x1, x2):
+        if (1/(1 + exp(-(self.w1*x1 + self.w2*x2 + self.bias)))) > 0.5:
+            return 1
+        else:
+            return 0
